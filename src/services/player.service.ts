@@ -9,14 +9,14 @@ import { Player } from '../models/Player';
 @Injectable({
   providedIn: 'root'
 })
-export class ServicesService {
+export class PlayerService {
   Week1Collection: AngularFirestoreCollection<Player>;
   Week1Doc: AngularFirestoreDocument<Player>;
   players: Observable<Player[]>;
   player: Observable<Player>;
 
   constructor(private afs: AngularFirestore) { 
-    this.Week1Collection = this.afs.collection('players');
+    this.Week1Collection = this.afs.collection('Week1');
   }
 
   getPlayers(): Observable<Player[]> {
@@ -26,9 +26,11 @@ export class ServicesService {
         const data = action.payload.doc.data() as Player;
         data.id = action.payload.doc.id;
         return data;
+
       });
     }));
 
     return this.players;
   }
+  
 }
