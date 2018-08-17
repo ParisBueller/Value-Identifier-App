@@ -1,47 +1,51 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
+import { Component} from '@angular/core';
+import { DataSource,CollectionViewer} from '@angular/cdk/collections';
+import { Observable, of } from 'rxjs';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 import { PlayerService } from '../../services/player.service';
 import { Player } from '../../models/Player';
+import { BehaviorSubject } from '../../../node_modules/rxjs';
+import { catchError, finalize } from '../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-players',
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.css']
 })
-export class PlayersComponent implements OnInit {
-  // players: Player[];
-  // displayedColumns = [ 'position', 'player','projection','salary','dpp'];
-  // dataSource;
+export class PlayersComponent implements DataSource<Player> {
+  players: {} | Player[]
 
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
+  private playersSubject = new BehaviorSubject<Player[]>([]);
+  private loadingSubject = new BehaviorSubject<boolean>(false);
 
-  constructor(private players : PlayerService, private afs: AngularFirestore) {
+  public loading$ = this.loadingSubject.asObservable();
 
-    //this.dataSource = new MatTableDataSource(this.players);
+
+  constructor(private playerService: PlayerService, private afs: AngularFirestore) { 
+
+  }
+
+  connect(collectionViewer:CollectionViewer): Observable<Player[]> {
+    return this.playersSubject.asObservable();
+  }
+
+  disconnect(collectionViewer: CollectionViewer): void {
+    this.playersSubject.complete();
+    this.loadingSubject.complete();
   }
 
   
+  loadPlayers() {
+    
+    this.loadingSubject.next(true);
 
- ngOnInit() {
-    // this.playerService.getPlayers().subscribe(players => {
-    //   this.players = players
-    //   console.log(players);
-    // });
-  
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+    this.playerService.getPlayers().pipe
+                      (catchError(() => of([])),
+                      finalize(() => this.loadingSubject.next(false))
+    )
+
+    .subscribe(players => this.playersSubject.next(players));
+
   }
-
-  // applyFilter(filterValue: string) {
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-
-  //   if (this.dataSource.paginator) {
-  //     this.dataSource.paginator.firstPage();
-  //   }
-  // }
 }
