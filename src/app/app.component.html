@@ -1,10 +1,9 @@
 <div class="table">
+
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
   </mat-form-field>
   
-  <mat-spinner class="spinner" *ngIf="dataSource.loading$ | async"></mat-spinner>
-
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -47,4 +46,5 @@
   
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
+</div>
  

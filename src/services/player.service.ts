@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
@@ -32,5 +33,9 @@ export class PlayerService {
 
     return this.players;
   }
+
+  // resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Player[]> {
+  //   return this.players.pipe(map(res => res['payload']));
+  // }
   
 }

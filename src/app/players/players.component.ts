@@ -1,7 +1,6 @@
 import { Component} from '@angular/core';
 import { DataSource,CollectionViewer} from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
-import { AngularFirestore } from 'angularfire2/firestore';
 
 import { PlayerService } from '../../services/player.service';
 import { Player } from '../../models/Player';
@@ -22,9 +21,7 @@ export class PlayersComponent implements DataSource<Player> {
   public loading$ = this.loadingSubject.asObservable();
 
 
-  constructor(private playerService: PlayerService, private afs: AngularFirestore) { 
-
-  }
+  constructor(private playerService: PlayerService) { }
 
   connect(collectionViewer:CollectionViewer): Observable<Player[]> {
     return this.playersSubject.asObservable();
