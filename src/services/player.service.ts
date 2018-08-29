@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { Player } from '../models/Player';
 
@@ -15,6 +14,7 @@ export class PlayerService {
   Week1Doc: AngularFirestoreDocument<Player>;
   players: Observable<Player[]>;
   player: Observable<Player>;
+  
 
   constructor(private afs: AngularFirestore) { 
     this.Week1Collection = this.afs.collection('Week1');
@@ -34,8 +34,16 @@ export class PlayerService {
     return this.players;
   }
 
-  // resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Player[]> {
-  //   return this.players.pipe(map(res => res['payload']));
-  // }
+  getQbs() {
+    const qb = new Observable<Player>();
+    const queryQb = qb.pipe(
+      switchMap(qbs => this.afs.collection('player', qb => qb.where('position','==', 'QB')).valueChanges()
+    )
+  );
+
+  queryQb.subscribe(queriedQbs => {
+    console.log(queriedQbs);
+  });  
+ }
   
 }
