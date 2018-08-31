@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule,MatProgressSpinnerModule,MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import { MatInputModule,MatProgressSpinnerModule,MatTableModule, MatPaginatorModule, MatSortModule, MatSelectModule,MatFormFieldModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
@@ -33,9 +34,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatSortModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    LayoutModule
+    LayoutModule,
+    MatSelectModule,
+    MatFormFieldModule  
   ],
   providers: [PlayerService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

@@ -1,5 +1,13 @@
-<div class="wrapper">
-  <div class="dashboard">
-    
+<div class="card mt-5 mb-5">
+  <div class="card-header">
+    Dashboard
+  </div>
+  <div class="card-body">
+    <mat-form-feld>
+      <mat-select placeholder="Position" [formControl]="positions" multiple>
+        <mat-option *ngFor="let position of positionList" [value]="position">{{position}}</mat-option>
+      </mat-select>
+    </mat-form-feld>
   </div>
 </div>
+
