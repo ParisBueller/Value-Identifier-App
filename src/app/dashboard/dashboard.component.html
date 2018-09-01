@@ -3,11 +3,20 @@
     Dashboard
   </div>
   <div class="card-body">
-    <mat-form-feld>
-      <mat-select placeholder="Position" [formControl]="positions" multiple>
-        <mat-option *ngFor="let position of positionList" [value]="position">{{position}}</mat-option>
-      </mat-select>
-    </mat-form-feld>
+    <div class="form-group">
+      <mat-form-feld>
+        <div class="form-control">
+          <mat-select placeholder="Position" [formControl]="positions" multiple>
+            <mat-option *ngFor="let position of positionList" [value]="position">{{position}}</mat-option>
+          </mat-select>
+        </div>
+        <div class="form-control mt-2">
+          <mat-select placeholder="Week" [formControl]="weeks" multiple>
+            <mat-option *ngFor="let week of weekList" [value]="week">{{week}}</mat-option>
+          </mat-select>
+        </div>
+      </mat-form-feld>
+    </div>
   </div>
 </div>
 

@@ -16,7 +16,7 @@ export class PlayersComponent implements DataSource<Player> {
   players: {} | Player[]
 
   private playersSubject = new BehaviorSubject<Player[]>([]);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
+  private loadingSubject = new BehaviorSubject<boolean>(true);
 
   public loading$ = this.loadingSubject.asObservable();
 

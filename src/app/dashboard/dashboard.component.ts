@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl } from '@angular/forms';
+import {FormControl, FormBuilder, FormGroup } from '@angular/forms';
 
 import { PlayerService } from '../../services/player.service';
 
@@ -12,16 +12,30 @@ import { PlayerService } from '../../services/player.service';
 })
 export class DashboardComponent implements OnInit {
   positions = new FormControl();
-  positionList: string[] = ['QB', 'RB', 'WR', 'TE','D/ST'];
+  weeks = new FormControl();
+  positionForm: FormGroup;
+  weekForm: FormGroup;
+  positionList: string[] = ['QB', 'RB', 'WR', 'TE','DST'];
+  weekList: string[] = ['1','2','3','4','5','6','7','8','9',
+                        '10','11','12','13','14','15','16','17'];
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private formBuilder: FormBuilder,private playerService: PlayerService) { }
 
   ngOnInit() {
+     this.positionForm = this.formBuilder.group({
+       QB: '',
+       RB: '',
+       WR: '',
+       TE: '',
+       DST: ''
+     });
+     this.onChanges();
   }
 
-  loadQbs() {
-    if(this.positions) {
+   onChanges(): void {
+     this.positionForm.valueChanges.subscribe(val => {
+       this.playerService.getQbs();
+     });
+   }
 
-    }
-  }
 }

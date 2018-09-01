@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule,MatProgressSpinnerModule,MatTableModule, MatPaginatorModule, MatSortModule, MatSelectModule,MatFormFieldModule } from '@angular/material';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -28,6 +29,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AngularFireModule.initializeApp(environment.firebase,'valueidentifier'),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
